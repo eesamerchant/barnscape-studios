@@ -11,8 +11,8 @@ interface TimeSlotPickerProps {
   hourlyRate: number;
   selectedStart: number | null;
   selectedEnd: number | null;
-  onStartChange: (hour: number) => void;
-  onEndChange: (hour: number) => void;
+  onStartChange: (hour: number | null) => void;
+  onEndChange: (hour: number | null) => void;
 }
 
 export function TimeSlotPicker({
@@ -83,18 +83,18 @@ export function TimeSlotPicker({
                   // Toggle hour selection or set start
                   if (isSelected && selectedStart === hour) {
                     // Clicking start hour again resets
-                    onStartChange(null as any);
-                    onEndChange(null as any);
-                  } else if (!selectedStart || hour < selectedStart) {
+                    onStartChange(null);
+                    onEndChange(null);
+                  } else if (selectedStart === null || hour < selectedStart) {
                     // New start
                     onStartChange(hour);
                     onEndChange(hour + 1);
-                  } else if (hour >= selectedStart) {
+                  } else if (selectedStart !== null && hour >= selectedStart) {
                     // Extend end
                     onEndChange(hour + 1);
                   }
                 }}
-                disabled={!isAvailable && (selectedStart === null || hour < selectedStart || hour >= selectedEnd)}
+                disabled={!isAvailable && (selectedStart === null || hour < selectedStart || (selectedEnd !== null && hour >= selectedEnd))}
                 className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-all ${
                   isSelected
                     ? "border-amber-400/60 border-2 bg-amber-400/20 text-white"
@@ -159,9 +159,4 @@ export function TimeSlotPicker({
 
       {selectedStart === null && (
         <p className="rounded-lg bg-gray-900/50 p-4 text-center text-sm text-gray-400">
-          Click to select your start time and drag to select duration (minimum {minHours} hours)
-        </p>
-      )}
-    </div>
-  );
-}
+          Click to select your start time and drag to select duration (minimu

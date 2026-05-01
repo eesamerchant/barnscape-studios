@@ -160,9 +160,16 @@ export default function BookingPage() {
 
       // Update discount code usage
       if (bookingData.discount_code_id) {
+        const { data: discountData } = await supabase
+          .from("discount_codes")
+          .select("current_uses")
+          .eq("id", bookingData.discount_code_id)
+          .single();
+
+        const newUses = (discountData?.current_uses ?? 0) + 1;
         await supabase
           .from("discount_codes")
-          .update({ current_uses: (await supabase.from("discount_codes").select("current_uses").eq("id", bookingData.discount_code_id)).data?.[0]?.current_uses + 1 || 1 })
+          .update({ current_uses: newUses })
           .eq("id", bookingData.discount_code_id);
       }
 
@@ -292,12 +299,4 @@ export default function BookingPage() {
                 addOns={addOns}
                 spaceId={space.id}
                 onSubmit={handleSubmit}
-                isLoading={submitting}
-              />
-            </div>
-          )}
-        </div>
-      </main>
-    </>
-  );
-}
+  
