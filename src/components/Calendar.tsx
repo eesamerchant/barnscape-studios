@@ -126,13 +126,13 @@ export function Calendar({ availabilityData, bookedDates }: CalendarProps) {
                   ${avail
                     ? sel
                       ? "bg-amber-500 text-black shadow-lg shadow-amber-500/30 scale-105"
-                      : "text-amber-400 hover:bg-amber-500/10 cursor-pointer"
+                      : isT ? 'bg-amber-500/20 text-amber-300 ring-2 ring-amber-500 font-bold hover:bg-amber-500/30 cursor-pointer' : "text-amber-400 hover:bg-amber-500/10 cursor-pointer"
                     : "text-[#30363d] cursor-default"
                   }
                 `}
               >
                 {date.getDate()}
-                {isT && !sel && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500" />}
+                
               </button>
             );
           })}
@@ -142,6 +142,7 @@ export function Calendar({ availabilityData, bookedDates }: CalendarProps) {
         <div className="px-4 py-2.5 border-t border-[#30363d]/60 flex gap-5 text-[10px] text-[#484f58]">
           <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500" /> Available</span>
           <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#30363d]" /> Unavailable</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500/20 ring-1 ring-amber-500" /> Today</span>
         </div>
       </div>
 
