@@ -299,4 +299,12 @@ export default function BookingPage() {
                 addOns={addOns}
                 spaceId={space.id}
                 onSubmit={handleSubmit}
-  
+                isLoading={submitting}
+              />
+            </div>
+          )}
+        </div>
+      </main>
+    </>
+  );
+}

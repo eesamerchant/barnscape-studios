@@ -159,4 +159,9 @@ export function TimeSlotPicker({
 
       {selectedStart === null && (
         <p className="rounded-lg bg-gray-900/50 p-4 text-center text-sm text-gray-400">
-          Click to select your start time and drag to select duration (minimu
+          Click to select your start time and drag to select duration (minimum {minHours} hours)
+        </p>
+      )}
+    </div>
+  );
+}
