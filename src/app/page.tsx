@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Calendar } from "@/components/Calendar";
-import type { Availability, Booking } from "@/lib/supabase";
+import { supabase, type Availability, type Booking } from "@/lib/supabase";
 
 export default function Home() {
-  const [venueTitle, setVenueTitle] = useState("Barnscape Studios");
   const [availabilityData, setAvailabilityData] = useState<Availability[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -14,29 +13,11 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { supabase } = await import("@/lib/supabase");
-
-        const { data: spaces } = await supabase
-          .from("spaces")
-          .select("name")
-          .eq("slug", "event-space")
-          .single();
-
-        if (spaces) {
-          setVenueTitle(spaces.name);
-        }
-
-        const { data: availability } = await supabase
-          .from("availability")
-          .select("*");
-
+        const [{ data: availability }, { data: allBookings }] = await Promise.all([
+          supabase.from("availability").select("*"),
+          supabase.from("bookings").select("*").in("status", ["pending", "confirmed"]),
+        ]);
         setAvailabilityData(availability || []);
-
-        const { data: allBookings } = await supabase
-          .from("bookings")
-          .select("*")
-          .in("status", ["pending", "confirmed"]);
-
         setBookings(allBookings || []);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -44,23 +25,16 @@ export default function Home() {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
   const bookedDates = bookings.reduce((acc, booking) => {
     const existing = acc.find((b) => b.date === booking.date);
+    const hours = [];
+    for (let i = booking.start_hour; i < booking.end_hour; i++) hours.push(i);
     if (existing) {
-      const newHours = [];
-      for (let i = booking.start_hour; i < booking.end_hour; i++) {
-        newHours.push(i);
-      }
-      existing.hours = [...new Set([...existing.hours, ...newHours])];
+      existing.hours = [...new Set([...existing.hours, ...hours])];
     } else {
-      const hours = [];
-      for (let i = booking.start_hour; i < booking.end_hour; i++) {
-        hours.push(i);
-      }
       acc.push({ date: booking.date, hours });
     }
     return acc;
@@ -68,89 +42,59 @@ export default function Home() {
 
   return (
     <>
-      <Header title={venueTitle} />
-      <main className="min-h-screen bg-[#0a0a0a] py-12">
-        <div className="mx-auto max-w-6xl px-6">
-          <section className="mb-12 text-center">
-            <h2 className="mb-4 text-4xl font-bold md:text-5xl animate-fade-in">
-              <span className="bg-gradient-to-r from-white via-amber-200 to-amber-400 bg-clip-text text-transparent">
-                {venueTitle}
-              </span>
-            </h2>
-            
-            <p className="animate-slide-up mx-auto mb-8 max-w-2xl text-lg text-gray-400">
-              A modern, sophisticated event space perfect for private events, corporate
-              gatherings, and memorable celebrations. Select an available date below to
-              begin your booking.
-            </p>
+      <Header />
+      <main className="max-w-3xl mx-auto px-6 py-10">
+        {/* Hero */}
+        <div className="text-center mb-10" style={{ animation: 'slideUp 0.4s ease-out' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+            Book Your <span className="text-amber-400">Event Space</span>
+          </h2>
+          <p className="text-[#8b949e] max-w-md mx-auto">
+            A modern venue for private events, corporate gatherings, and celebrations. Pick a date below.
+          </p>
 
-            <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-              {[
-                { title: "Available", desc: "Multiple dates open", delay: "0s" },
-                { title: "Flexible", desc: "Book by the hour", delay: "0.1s" },
-                { title: "Professional", desc: "Verified bookings", delay: "0.2s" },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="glass card-hover rounded-xl p-6 border border-amber-500/10"
-                  style={{
-                    animation: `slideUp 0.5s ease-out ${item.delay} both`,
-                  }}
-                >
-                  <div className="text-3xl font-bold text-amber-400 mb-2 animate-pulse-glow">
-                    {item.title}
-                  </div>
-                  <p className="text-gray-400">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <div className="mb-8 animate-slide-up">
-              <h2 className="text-2xl font-bold text-white">Select a Date to Book</h2>
-              <p className="mt-2 text-gray-400">
-                Click on any available date to see available time slots and make your selection
-              </p>
-            </div>
-
-            {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-700 border-t-amber-400" />
+          <div className="flex justify-center gap-3 mt-8">
+            {[
+              { label: '$150', sub: '/hr' },
+              { label: '2hr', sub: 'min' },
+              { label: 'E-Transfer', sub: 'payment' },
+            ].map((item) => (
+              <div key={item.label} className="bg-[#161b22] border border-[#30363d] rounded-2xl px-5 py-3 text-center hover:border-amber-500/30 transition-colors">
+                <p className="text-lg font-bold text-amber-400">{item.label}</p>
+                <p className="text-[11px] text-[#8b949e] uppercase tracking-wider">{item.sub}</p>
               </div>
-            ) : (
-              <Calendar availabilityData={availabilityData} bookedDates={bookedDates} />
-            )}
-          </section>
+            ))}
+          </div>
+        </div>
 
-          <section className="mt-16 rounded-xl border border-gray-800/50 bg-gray-900/30 p-8 animate-slide-up">
-            <h3 className="mb-4 text-xl font-semibold text-white">How It Works</h3>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
-              {[
-                { num: "1", title: "Select a Date", desc: "Browse the calendar and pick an available date" },
-                { num: "2", title: "Choose Time", desc: "Pick your start and end times for the day" },
-                { num: "3", title: "Add Details", desc: "Enter your contact information and preferences" },
-                { num: "4", title: "Confirm", desc: "Send deposit via e-transfer and confirm booking" },
-              ].map((step, idx) => (
-                <div
-                  key={idx}
-                  className="card-hover group relative rounded-lg border border-amber-500/0 bg-amber-500/0 p-4 transition-all hover:border-amber-500/30 hover:bg-amber-500/10"
-                  style={{
-                    animation: `slideUp 0.5s ease-out ${0.1 * (idx + 1)}s both`,
-                  }}
-                >
-                  <div className="mb-2 text-2xl font-bold text-amber-400 group-hover:text-amber-300 transition-colors">
-                    {step.num}
-                  </div>
-                  <p className="text-gray-300">
-                    <strong className="group-hover:text-amber-300 transition-colors">{step.title}</strong>
-                    <br />
-                    {step.desc}
-                  </p>
+        {/* Calendar */}
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <div className="h-7 w-7 rounded-full border-2 border-[#30363d] border-t-amber-500 animate-spin" />
+          </div>
+        ) : (
+          <Calendar availabilityData={availabilityData} bookedDates={bookedDates} />
+        )}
+
+        {/* How it works */}
+        <div className="mt-12 bg-[#161b22] border border-[#30363d] rounded-2xl p-6" style={{ animation: 'slideUp 0.5s ease-out 0.2s both' }}>
+          <h3 className="text-sm font-semibold text-white mb-4">How It Works</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { n: '1', t: 'Pick Date', d: 'Choose available date' },
+              { n: '2', t: 'Select Hours', d: 'Tap time slots' },
+              { n: '3', t: 'Add Details', d: 'Contact & add-ons' },
+              { n: '4', t: 'Confirm', d: 'Send e-transfer' },
+            ].map((s) => (
+              <div key={s.n} className="text-center group">
+                <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 text-sm font-bold flex items-center justify-center mx-auto mb-2 group-hover:bg-amber-500 group-hover:text-black transition-colors">
+                  {s.n}
                 </div>
-              ))}
-            </div>
-          </section>
+                <p className="text-xs font-medium text-white">{s.t}</p>
+                <p className="text-[11px] text-[#8b949e] mt-0.5">{s.d}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </>
