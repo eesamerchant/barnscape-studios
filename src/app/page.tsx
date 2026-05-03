@@ -52,19 +52,6 @@ export default function Home() {
           <p className="text-[#6b6b80] max-w-md mx-auto text-sm">
             A modern venue for private events, corporate gatherings, and celebrations. Pick a date below.
           </p>
-
-          <div className="flex justify-center gap-3 mt-8">
-            {[
-              { label: '$150', sub: '/hr' },
-              { label: '2hr', sub: 'min' },
-              { label: 'E-Transfer', sub: 'payment' },
-            ].map((item) => (
-              <div key={item.label} className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl px-5 py-3 text-center hover:border-amber-500/30 transition-colors">
-                <p className="text-lg font-bold text-amber-400">{item.label}</p>
-                <p className="text-[11px] text-[#6b6b80] uppercase tracking-wider">{item.sub}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Calendar */}

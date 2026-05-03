@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   startOfMonth, endOfMonth, eachDayOfInterval, format,
@@ -28,7 +28,7 @@ export function Calendar({ availabilityData, bookedDates }: CalendarProps) {
   const [startHour, setStartHour] = useState<number | null>(null);
   const [endHour, setEndHour] = useState<number | null>(null);
 
-  const today = startOfDay(new Date());
+  const today = useMemo(() => startOfDay(new Date()), []);
   const days = eachDayOfInterval({ start: startOfMonth(currentMonth), end: endOfMonth(currentMonth) });
   const pad = getDay(startOfMonth(currentMonth));
   const availableDates = new Set(availabilityData.filter((a) => a.is_available).map((a) => a.date));
@@ -280,9 +280,9 @@ export function Calendar({ availabilityData, bookedDates }: CalendarProps) {
             <button
               disabled={duration === 0}
               onClick={() => router.push(`/book/${selectedDate}?start=${startHour}&end=${endHour}`)}
-              className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
+              className={`w-full py-3 rounded-full text-sm font-semibold transition-all duration-300
                 ${duration > 0
-                  ? "bg-amber-500 text-black hover:bg-amber-400 shadow-md shadow-amber-500/20"
+                  ? "bg-amber-500 text-black hover:bg-amber-400 hover:scale-[1.03] hover:shadow-lg hover:shadow-amber-500/30 active:scale-[0.98] shadow-md shadow-amber-500/20"
                   : "bg-[#1a1a25] text-[#4a4a5a] cursor-not-allowed"
                 }
               `}
