@@ -2,12 +2,12 @@
 
 :root {
   --gold: #d4a853;
-  --dark: #0d1117;
-  --dark-card: #161b22;
-  --dark-hover: #1c2333;
-  --dark-border: #30363d;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
+  --dark: #0a0a0f;
+  --dark-card: #12121a;
+  --dark-surface: #1a1a25;
+  --dark-border: #2a2a3a;
+  --text-primary: #e4e4ed;
+  --text-muted: #6b6b80;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,13 +18,15 @@ body {
   color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection { background: var(--gold); color: var(--dark); }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a4a; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

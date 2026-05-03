@@ -100,7 +100,7 @@ export function TimeSlotPicker({
                     ? "border-amber-400/60 border-2 bg-amber-400/20 text-white"
                     : isAvailable
                       ? "border border-gray-600 bg-gray-800/30 text-gray-300 hover:border-gray-500 hover:bg-gray-800/50"
-                      : "border border-gray-700 bg-gray-900/20 text-gray-600 cursor-not-allowed"
+                      : "border border-gray-700 bg-gray-900/20 text-[#6b6b80] cursor-not-allowed"
                 }`}
               >
                 {String(hour).padStart(2, "0")}:00
@@ -108,7 +108,7 @@ export function TimeSlotPicker({
             );
           })}
         </div>
-        <p className="mt-4 text-sm text-gray-400">
+        <p className="mt-4 text-sm text-[#6b6b80]">
           {dateAvailability
             ? `Available: ${String(startHour).padStart(2, "0")}:00 - ${String(endHour).padStart(2, "0")}:00`
             : "No availability set for this date"}
@@ -119,13 +119,13 @@ export function TimeSlotPicker({
         <div className="space-y-4 rounded-lg border border-amber-500/30 bg-amber-500/5 p-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-gray-400">Check-in</p>
+              <p className="text-sm text-[#6b6b80]">Check-in</p>
               <p className="text-2xl font-bold text-amber-400">
                 {String(selectedStart).padStart(2, "0")}:00
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Check-out</p>
+              <p className="text-sm text-[#6b6b80]">Check-out</p>
               <p className="text-2xl font-bold text-amber-400">
                 {String(selectedEnd).padStart(2, "0")}:00
               </p>
@@ -134,11 +134,11 @@ export function TimeSlotPicker({
 
           <div className="border-t border-amber-500/20 pt-4">
             <div className="flex items-center justify-between">
-              <span className="text-gray-400">Duration</span>
+              <span className="text-[#6b6b80]">Duration</span>
               <span className="font-semibold text-white">{duration} hours</span>
             </div>
             <div className="mt-2 flex items-center justify-between">
-              <span className="text-gray-400">Rate</span>
+              <span className="text-[#6b6b80]">Rate</span>
               <span className="font-semibold text-white">${hourlyRate}/hour</span>
             </div>
             {!dateAvailability?.is_available && (
@@ -158,7 +158,7 @@ export function TimeSlotPicker({
       )}
 
       {selectedStart === null && (
-        <p className="rounded-lg bg-gray-900/50 p-4 text-center text-sm text-gray-400">
+        <p className="rounded-lg bg-gray-900/50 p-4 text-center text-sm text-[#6b6b80]">
           Click to select your start time and drag to select duration (minimum {minHours} hours)
         </p>
       )}

@@ -30,7 +30,7 @@ export default function Home() {
 
   const bookedDates = bookings.reduce((acc, booking) => {
     const existing = acc.find((b) => b.date === booking.date);
-    const hours = [];
+    const hours: number[] = [];
     for (let i = booking.start_hour; i < booking.end_hour; i++) hours.push(i);
     if (existing) {
       existing.hours = [...new Set([...existing.hours, ...hours])];
@@ -49,7 +49,7 @@ export default function Home() {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
             Book Your <span className="text-amber-400">Event Space</span>
           </h2>
-          <p className="text-[#8b949e] max-w-md mx-auto">
+          <p className="text-[#6b6b80] max-w-md mx-auto text-sm">
             A modern venue for private events, corporate gatherings, and celebrations. Pick a date below.
           </p>
 
@@ -59,9 +59,9 @@ export default function Home() {
               { label: '2hr', sub: 'min' },
               { label: 'E-Transfer', sub: 'payment' },
             ].map((item) => (
-              <div key={item.label} className="bg-[#161b22] border border-[#30363d] rounded-2xl px-5 py-3 text-center hover:border-amber-500/30 transition-colors">
+              <div key={item.label} className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl px-5 py-3 text-center hover:border-amber-500/30 transition-colors">
                 <p className="text-lg font-bold text-amber-400">{item.label}</p>
-                <p className="text-[11px] text-[#8b949e] uppercase tracking-wider">{item.sub}</p>
+                <p className="text-[11px] text-[#6b6b80] uppercase tracking-wider">{item.sub}</p>
               </div>
             ))}
           </div>
@@ -70,14 +70,14 @@ export default function Home() {
         {/* Calendar */}
         {loading ? (
           <div className="flex justify-center py-16">
-            <div className="h-7 w-7 rounded-full border-2 border-[#30363d] border-t-amber-500 animate-spin" />
+            <div className="h-7 w-7 rounded-full border-2 border-[#2a2a3a] border-t-amber-500 animate-spin" />
           </div>
         ) : (
           <Calendar availabilityData={availabilityData} bookedDates={bookedDates} />
         )}
 
         {/* How it works */}
-        <div className="mt-12 bg-[#161b22] border border-[#30363d] rounded-2xl p-6" style={{ animation: 'slideUp 0.5s ease-out 0.2s both' }}>
+        <div className="mt-12 bg-[#12121a] border border-[#2a2a3a] rounded-2xl p-6" style={{ animation: 'slideUp 0.5s ease-out 0.2s both' }}>
           <h3 className="text-sm font-semibold text-white mb-4">How It Works</h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
@@ -91,7 +91,7 @@ export default function Home() {
                   {s.n}
                 </div>
                 <p className="text-xs font-medium text-white">{s.t}</p>
-                <p className="text-[11px] text-[#8b949e] mt-0.5">{s.d}</p>
+                <p className="text-[11px] text-[#6b6b80] mt-0.5">{s.d}</p>
               </div>
             ))}
           </div>

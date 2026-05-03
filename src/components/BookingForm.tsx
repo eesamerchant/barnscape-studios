@@ -212,7 +212,7 @@ export function BookingForm({
                     <div>
                       <p className="font-medium text-white">{addOn.name}</p>
                       {addOn.description && (
-                        <p className="text-xs text-gray-400">{addOn.description}</p>
+                        <p className="text-xs text-[#6b6b80]">{addOn.description}</p>
                       )}
                     </div>
                   </label>

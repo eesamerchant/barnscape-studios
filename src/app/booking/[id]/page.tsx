@@ -76,7 +76,7 @@ export default function BookingConfirmationPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-[#0a0a0a] py-12">
+        <main className="min-h-screen bg-[#0a0a0f] py-12">
           <div className="mx-auto max-w-4xl px-6 flex items-center justify-center py-12">
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-700 border-t-amber-400" />
           </div>
@@ -89,7 +89,7 @@ export default function BookingConfirmationPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-[#0a0a0a] py-12">
+        <main className="min-h-screen bg-[#0a0a0f] py-12">
           <div className="mx-auto max-w-4xl px-6">
             <div className="rounded-lg border border-red-500/30 bg-red-900/10 p-6 text-center">
               <p className="text-red-400">Booking not found.</p>
@@ -117,8 +117,8 @@ export default function BookingConfirmationPage() {
 
   return (
     <>
-      <Header title={space.name} />
-      <main className="min-h-screen bg-[#0a0a0a] py-12">
+      <Header />
+      <main className="min-h-screen bg-[#0a0a0f] py-12">
         <div className="mx-auto max-w-4xl px-6">
           <button
             onClick={() => router.push("/")}
@@ -131,7 +131,7 @@ export default function BookingConfirmationPage() {
           <div className="mb-8 rounded-xl border border-green-500/30 bg-green-900/10 p-8 text-center">
             <div className="mb-4 text-5xl">✓</div>
             <h1 className="mb-2 text-3xl font-bold text-white">Booking Confirmed!</h1>
-            <p className="text-gray-400">
+            <p className="text-[#6b6b80]">
               Your booking request has been received. Details are below.
             </p>
           </div>
@@ -146,7 +146,7 @@ export default function BookingConfirmationPage() {
                   <p className="text-4xl font-bold text-amber-400 font-mono">
                     {booking.id.substring(0, 8).toUpperCase()}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-[#6b6b80]">
                     Please save this reference for your records
                   </p>
                 </div>
@@ -158,7 +158,7 @@ export default function BookingConfirmationPage() {
                 <div className={`inline-flex rounded-lg border px-4 py-2 ${statusColors[booking.status]}`}>
                   <span className="font-semibold capitalize">{booking.status}</span>
                 </div>
-                <p className="mt-4 text-sm text-gray-400">
+                <p className="mt-4 text-sm text-[#6b6b80]">
                   {booking.status === "pending" &&
                     "Your booking is pending payment verification. Once we confirm your e-transfer, your booking will be marked as confirmed."}
                   {booking.status === "confirmed" &&
@@ -175,22 +175,22 @@ export default function BookingConfirmationPage() {
                 <h2 className="mb-6 text-lg font-semibold text-white">Booking Details</h2>
                 <div className="space-y-4">
                   <div className="flex justify-between border-b border-gray-700/30 pb-4">
-                    <span className="text-gray-400">Space</span>
+                    <span className="text-[#6b6b80]">Space</span>
                     <span className="font-semibold text-white">{space.name}</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-700/30 pb-4">
-                    <span className="text-gray-400">Date</span>
+                    <span className="text-[#6b6b80]">Date</span>
                     <span className="font-semibold text-white">{bookingDate}</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-700/30 pb-4">
-                    <span className="text-gray-400">Time</span>
+                    <span className="text-[#6b6b80]">Time</span>
                     <span className="font-semibold text-white">
                       {String(booking.start_hour).padStart(2, "0")}:00 -{" "}
                       {String(booking.end_hour).padStart(2, "0")}:00
                     </span>
                   </div>
                   <div className="flex justify-between border-b border-gray-700/30 pb-4">
-                    <span className="text-gray-400">Duration</span>
+                    <span className="text-[#6b6b80]">Duration</span>
                     <span className="font-semibold text-white">
                       {booking.end_hour - booking.start_hour} hours
                     </span>
@@ -203,15 +203,15 @@ export default function BookingConfirmationPage() {
                 <h2 className="mb-6 text-lg font-semibold text-white">Your Information</h2>
                 <div className="space-y-4">
                   <div className="flex justify-between border-b border-gray-700/30 pb-4">
-                    <span className="text-gray-400">Name</span>
+                    <span className="text-[#6b6b80]">Name</span>
                     <span className="font-semibold text-white">{booking.customer_name}</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-700/30 pb-4">
-                    <span className="text-gray-400">Email</span>
+                    <span className="text-[#6b6b80]">Email</span>
                     <span className="font-semibold text-white">{booking.customer_email}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Phone</span>
+                    <span className="text-[#6b6b80]">Phone</span>
                     <span className="font-semibold text-white">{booking.customer_phone}</span>
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export default function BookingConfirmationPage() {
                             {item.add_on?.name || "Unknown"} x{item.quantity}
                           </p>
                           {item.add_on?.description && (
-                            <p className="text-sm text-gray-400">{item.add_on.description}</p>
+                            <p className="text-sm text-[#6b6b80]">{item.add_on.description}</p>
                           )}
                         </div>
                         <span className="font-semibold text-white">
@@ -259,7 +259,7 @@ export default function BookingConfirmationPage() {
                 <h3 className="text-lg font-semibold text-white">Price Summary</h3>
 
                 <div className="space-y-2 border-b border-amber-500/20 pb-4">
-                  <div className="flex justify-between text-gray-400">
+                  <div className="flex justify-between text-[#6b6b80]">
                     <span>Base Rate</span>
                     <span>${(booking.total_amount - booking.discount_amount).toFixed(2)}</span>
                   </div>
@@ -288,7 +288,7 @@ export default function BookingConfirmationPage() {
                       ${booking.deposit_amount.toFixed(2)}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-[#6b6b80]">
                     E-Transfer Reference: {booking.etransfer_reference}
                   </p>
                 </div>
@@ -297,7 +297,7 @@ export default function BookingConfirmationPage() {
                   <p className="text-sm text-gray-300 mb-3">
                     <strong>Next Steps:</strong>
                   </p>
-                  <ol className="text-xs text-gray-400 space-y-2">
+                  <ol className="text-xs text-[#6b6b80] space-y-2">
                     <li>1. Send e-transfer of ${booking.deposit_amount.toFixed(2)}</li>
                     <li>2. Include your booking reference in the message</li>
                     <li>3. We'll confirm receipt and activate your booking</li>

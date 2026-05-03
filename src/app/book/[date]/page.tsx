@@ -187,7 +187,7 @@ export default function BookingPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-[#0a0a0a] py-12">
+        <main className="min-h-screen bg-[#0a0a0f] py-12">
           <div className="mx-auto max-w-6xl px-6 flex items-center justify-center py-12">
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-700 border-t-amber-400" />
           </div>
@@ -200,7 +200,7 @@ export default function BookingPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-[#0a0a0a] py-12">
+        <main className="min-h-screen bg-[#0a0a0f] py-12">
           <div className="mx-auto max-w-6xl px-6">
             <div className="rounded-lg border border-red-500/30 bg-red-900/10 p-6 text-center">
               <p className="text-red-400">This date is no longer available. Please select another date.</p>
@@ -224,8 +224,8 @@ export default function BookingPage() {
 
   return (
     <>
-      <Header title={space.name} />
-      <main className="min-h-screen bg-[#0a0a0a] py-12">
+      <Header />
+      <main className="min-h-screen bg-[#0a0a0f] py-12">
         <div className="mx-auto max-w-4xl px-6">
           <button
             onClick={() => router.push("/")}
@@ -238,7 +238,7 @@ export default function BookingPage() {
             <h1 className="text-3xl font-bold text-white mb-2">
               {format(parse(dateParam, "yyyy-MM-dd", new Date()), "EEEE, MMMM d, yyyy")}
             </h1>
-            <p className="text-gray-400">
+            <p className="text-[#6b6b80]">
               Hourly rate: ${space.hourly_rate}/hour (Minimum {space.min_booking_hours} hours)
             </p>
           </div>
@@ -263,13 +263,13 @@ export default function BookingPage() {
                 <div className="sticky top-20 rounded-lg border border-amber-500/30 bg-amber-500/5 p-6">
                   <h3 className="mb-4 text-lg font-semibold text-white">Summary</h3>
                   <div className="space-y-3 text-sm">
-                    <div className="flex justify-between text-gray-400">
+                    <div className="flex justify-between text-[#6b6b80]">
                       <span>Duration</span>
                       <span className="text-white font-medium">
                         {selectedEnd - selectedStart} hours
                       </span>
                     </div>
-                    <div className="flex justify-between text-gray-400">
+                    <div className="flex justify-between text-[#6b6b80]">
                       <span>Rate</span>
                       <span className="text-white font-medium">
                         ${space.hourly_rate}/hr
